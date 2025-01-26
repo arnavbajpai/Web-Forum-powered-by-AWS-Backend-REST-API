@@ -1,0 +1,723 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Forum - OpenAPI 3.0",
+    "description": "",
+    "termsOfService": "",
+    "contact": {
+      "email": "arnav@xyz.com"
+    },
+    "license": {
+      "name": "",
+      "url": ""
+    },
+    "version": "0.1"
+  },
+  "servers": [
+    {
+      "url": "https://petstore3.swagger.io/api/v3"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user."
+    },
+    {
+      "name": "posts",
+      "description": "Operation about posts."
+    },
+    {
+      "name": "tags",
+      "description": "Operation about tags."
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Add a new user to the forum.",
+        "description": "Add a new user to the forum.",
+        "operationId": "addUser",
+        "requestBody": {
+          "description": "Create a new user in the forum.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation."   
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Validation exception"
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user by user alias.",
+        "description": "",
+        "operationId": "getUserByName",
+        "parameters": [
+          {
+            "name": "userAlias",
+            "in": "query",
+            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied."
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{userID}": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updates a user in the store with form data.",
+        "description": "",
+        "operationId": "updateuserWithForm",
+        "parameters": [
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "ID of user that needs to be updated.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userAlias",
+            "in": "query",
+            "description": "Alias name of user that needs to be updated.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "First name of user to be updated.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "surname",
+            "in": "query",
+            "description": "Last name of user to be updated.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "description": "User phone no. to be updated.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Server error."
+          }, 
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deletes a user.",
+        "description": "delete a user.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "ID of user that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted succesfully."
+          },
+          "400": {
+            "description": "Invalid user id."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/posts": {
+      "post": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Add a new post to the forum.",
+        "description": "Add a new post to the forum.",
+        "operationId": "addPost",
+        "requestBody": {
+          "description": "Create a new post in the forum.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "422": {
+            "description": "Validation exception."
+          }, 
+          "500": {
+            "description": "Server error."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Get post.",
+        "description": "",
+        "operationId": "getPostByQuery",
+        "parameters": [
+          {
+            "name": "categoryID",
+            "in": "query",
+            "description": "Fetch posts by category.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "tagID",
+            "in": "query",
+            "description": "Fetch posts by tag.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "parentID",
+            "in": "query",
+            "description": "Fetch posts by parent.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "application/json": {
+              "type": "array", 
+              "items": { 
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "application/xml": {
+              "type": "array", 
+              "items": { 
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid post information supplied."
+          },
+          "404": {
+            "description": "Post not found."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/posts/{postID}": {
+      "post": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Update a post field.",
+        "description": "Update a post field.",
+        "operationId": "updatePost",
+        "parameters": [
+          {
+            "name": "postID",
+            "in": "path",
+            "description": "ID of post tp update.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Update title.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Update status.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Update description.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Deletes a post.",
+        "description": "delete a post.",
+        "operationId": "deletePost",
+        "parameters": [
+          {
+            "name": "postID",
+            "in": "path",
+            "description": "ID of post that needs to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Post Deleted succesfully."
+          },
+          "400": {
+            "description": "Invalid post value."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Get post by id.",
+        "description": "",
+        "operationId": "getPostByQuery",
+        "parameters": [
+          {
+            "name": "postID",
+            "in": "path",
+            "description": "Fetch posts by category.",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation.",
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }   
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            },
+            "400": {
+              "description": "Invalid post information supplied."
+            },
+            "404": {
+              "description": "Post not found."
+            },
+            "500": {
+              "description": "Server error."
+            }
+          }
+        }
+      }
+    },
+    "/tags": {
+      "post": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "Add a new tag to the forum.",
+        "description": "Add a new tag to the forum.",
+        "operationId": "addTag",
+        "requestBody": {
+          "description": "Create a new tag in the forum.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "Invalid input."
+          },
+          "422": {
+            "description": "Validation exception."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "Get top tags.",
+        "description": "",
+        "operationId": "gettagByQuery",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "apply limit",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "type": "array", 
+                "items": { 
+                  "schema": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              },
+              "application/xml": {
+                "type": "array", 
+                "items": { 
+                  "schema": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tag not found."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/tags/{tagID}": {
+      "delete": {
+        "tags": [
+          "tags"
+        ],
+        "summary": "Deletes a tag",
+        "description": "delete a tag",
+        "operationId": "deletetag",
+        "parameters": [
+          {
+            "name": "tagID",
+            "in": "path",
+            "description": "ID of tag that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tag deleted succesfully."
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }, 
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "userID": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1234
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "userAlias": {
+            "type": "string",
+            "example": "john_doe"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John"
+          },
+          "surname": {
+            "type": "string",
+            "example": "Doe"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+65 93894020"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "14:40"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "14:40"
+          },
+          "role": {
+            "type": "string",
+            "example": "Admin"
+          },
+          "userStatus": {
+            "type": "string",
+            "description": "User Status",
+            "format": "string",
+            "example": "Online"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "categoryID": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1234
+          },
+          "name": {
+            "type": "string",
+            "example": "iOS"
+          },
+          "description": {
+            "type": "string",
+            "example": "Topics related to tech"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "14:40"
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1234
+          },
+          "categoryID": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1234
+          },
+          "parentPostID": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1234
+          },
+          "title": {
+            "type": "string",
+            "example": "Bugs"
+          },
+          "tagIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1234
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "14:40"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "14:49"
+          },
+          "postStatus": {
+            "type": "string",
+            "example": "resolved"
+          },
+          "content": {
+            "type": "string",
+            "example": "Hello World"
+          },
+          "userID": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1234
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "tagID": {
+            "type": "integer",
+            "example": 1234
+          },
+          "name": {
+            "type": "string",
+            "example": "windows"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "14:40"
+          }
+        }
+      }
+    }
+  }
+}
